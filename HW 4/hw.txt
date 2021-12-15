@@ -1,0 +1,45 @@
+﻿Noela Wheeler
+CS 32 section 1G
+Homework 4
+
+
+2. Explain in a sentence or two why the call to Set<Coord>::insert causes at least one compilation error..
+
+
+The call to Set<Coord>::insert does not compile because the insert function uses the == operator to compare two Coords. We never defined the == for Coords, so the code will also not compile for this reason. In addition, insert makes a call to the findFirstAtMost function. The findFirstAtMost function uses the > operator to compare two items of the given ItemType -- in this instance it is the Coord class. This code will not compile because we never defined the > or < operator to compare two Coords.
+
+
+4b. We introduced the two-parameter overload of listAll. Why could you not solve this problem given the constraints in part a if we had only a one-parameter listAll, and you had to implement it as the recursive function?
+
+
+We could not solve this problem with only a one-parameter listAll because the recursive function needs to get closer to a base case with each iteration. In this case we have the MenuItem* m parameter. Each time we call this function this parameter gets closer to the end of the original list, and so we have our base case of m->menuItems() reaching a null pointer or m->menuItems() having a size of zero. In addition, the menu item is not doubly linked so once we start recursively calling the function and moving down the list we have no way to access information about previous nodes. For this reason we also need the path parameter to store information about our list.
+
+
+5a. What is the time complexity of this algorithm, in terms of the number of basic operations (e.g., additions, assignments, comparisons) performed: Is it O(N), O(N log N), or what? Why?
+
+
+The time complexity of this algorithm is O(N^3). This is because each loop has some number of steps proportional to N. There are three different loops nested inside each other, therefore the total algorithm will have some number of steps proportional to N^3. 
+
+
+5b. What is the time complexity of this algorithm? Why?
+
+
+The time complexity of this algorithm is also 0(N^3). This algorithm also has three nested for-loops. The outside loop iterates some number of steps proportional to N. The middle loop has some number of steps proportional to i. i increases in value through each iteration of the outside loop. Adding up all the values of i equals 0+1+2+3+...+(N-1)=(N-1)*N/2=(.5N^2-.5N)=O(N^2). We ignore all the lower order terms and constant of proportionality to get that the middle loop has a number of steps proportional to N^2. The inner loop also has a time complexity equal to O(N), just like the outside loop. Because we have three nested loops all with a time complexity of O(N) the time complexity of the entire algorithm is O(N^3).
+
+
+6a. Assume that set1, set2, and the old value of result each have N elements. In terms of the number of linked list nodes visited during the execution of this function, what is its worst case time complexity? Why?
+
+
+In the worst case scenario unite will visit N^2 linked list nodes. For the unite function worst case scenario, none of the initial conditions will be true. If that is the case then the for-loop will have some number of steps proportional to the size of sp. In this case the size of sp is N. The for-loop calls the insert function. The insert function calls the function findFirstAtMost. For the worst case scenario findFirstAtMost has to loop through the entire linked list to find the correct node. insert then calls the insertBefore function which has a constant number of steps. This means the insert function has a time complexity of O(N). Therefore, the unite function has a time complexity of O(N^2). 
+
+
+6b. Assume that set1, set2, and the old value of *this each have N elements. In terms of the number of linked list nodes or ItemType objects visited during the execution of this function, what is its time complexity? Why?
+
+
+The time complexity of this function is O(N logN). The first two for-loops both perform a constant number of steps proportional to N. Therefore we have visited 2N nodes. The while loop will visit some number of nodes less than N. The third for-loop will visit some number of nodes proportional to N. In the end we get multiple steps with a time complexity of O(N) plus a function with time complexity of O(N logN). If we add this together and ignore constants of proportionality the final algorithm will have a time complexity of O(N logN).  
+
+
+6c. Assume that set1, set2, and the old value of *this each have N elements. In terms of the number of linked list nodes visited during the execution of this function, what is its time complexity? Why?
+
+
+The time complexity of this function is O(N). The beginning lines of code all have a time complexity of O(1). The while loop will visit at worst N nodes and so has a time complexity of O(N). The for-loop will visit at worst N nodes and so also has a time complexity of O(N). If we add the two time complexities and ignore constants of proportionality, we see that the algorithm has a time complexity of O(N).
